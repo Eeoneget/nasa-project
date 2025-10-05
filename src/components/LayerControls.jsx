@@ -1,9 +1,7 @@
 ﻿"use client";
 
 const timeOptions = [
-  { id: "day", label: "Day" },
-  { id: "night", label: "Night" },
-  { id: "season", label: "Season" }
+  { id: "night", label: "Night" }
 ];
 
 export default function LayerControls({
@@ -118,7 +116,7 @@ export default function LayerControls({
 
       <div className="mt-6">
         <p className="text-sm text-white/70 mb-2">Time / Season</p>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 gap-2">
           {timeOptions.map((option) => (
             <button
               type="button"

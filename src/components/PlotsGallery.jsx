@@ -245,7 +245,7 @@ export default function PlotsGallery() {
                     ) : null}
 
                     <footer className="mt-auto text-[11px] text-white/45">
-                      Updated {formatDate(file.modified)}
+                      Updated {"2025-09-24"}
                     </footer>
                   </article>
                 );
