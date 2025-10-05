@@ -1,96 +1,96 @@
 
-# Документация к коду PACE Chlorophyll-a (OC4 proxy)
+# PACE Chlorophyll-a (OC4 proxy) Code Documentation
 
-## 1. Назначение
+## 1. Purpose
 
-Этот код выполняет следующие задачи:
+This code performs the following tasks:
 
-1. Доступ к спутниковым данным **PACE L2** через API `earthaccess`.
-2. Вычисление концентрации хлорофилла-a в океане с использованием алгоритма **OC4V6**.
-3. Сбор данных из нескольких гранул (орбитальных снимков) за заданный период.
-4. Визуализация пространственного распределения хлорофилла на карте.
-5. Подготовка графиков для анализа изменений концентрации хлорофилла.
-
----
-
-## 2. Используемые библиотеки
-
-| Библиотека          | Назначение                                                 |
-| ------------------- | ---------------------------------------------------------- |
-| `earthaccess`       | Доступ к данным NASA PACE (поиск и скачивание)             |
-| `h5netcdf`          | Чтение файлов формата NetCDF/HDF5                          |
-| `numpy`             | Математические операции с массивами                        |
-| `matplotlib.pyplot` | Визуализация данных (графики)                              |
-| `cartopy.crs`       | Географические проекции для карт                           |
-| `cartopy.feature`   | Отображение берегов, суши и других географических объектов |
+1. Access to **PACE L2** satellite data via `earthaccess` API.
+2. Calculation of chlorophyll-a concentration in the ocean using the **OC4V6** algorithm.
+3. Data collection from multiple granules (orbital images) over a specified period.
+4. Visualization of spatial distribution of chlorophyll on a map.
+5. Preparation of plots for analyzing chlorophyll concentration changes.
 
 ---
 
-## 3. Структура кода
+## 2. Libraries Used
 
-### 3.1 Авторизация
+| Library              | Purpose                                                      |
+| -------------------- | ------------------------------------------------------------ |
+| `earthaccess`        | Access to NASA PACE data (search and download)              |
+| `h5netcdf`           | Reading NetCDF/HDF5 format files                             |
+| `numpy`              | Mathematical operations with arrays                          |
+| `matplotlib.pyplot`  | Data visualization (plots)                                  |
+| `cartopy.crs`        | Geographic projections for maps                             |
+| `cartopy.feature`    | Display of coastlines, land and other geographic features   |
+
+---
+
+## 3. Code Structure
+
+### 3.1 Authentication
 
 ```python
 earthaccess.login()
 ```
 
-* Осуществляется один раз перед скачиванием данных.
-* Требует учетной записи Earthdata NASA.
+* Performed once before downloading data.
+* Requires NASA Earthdata account.
 
 ---
 
-### 3.2 Функция `compute_chlor_oc4(rrs, wavelengths)`
+### 3.2 Function `compute_chlor_oc4(rrs, wavelengths)`
 
-* **Вход:**
+* **Input:**
 
-  * `rrs` — отражение воды на разных длинах волн (массив `Rrs`).
-  * `wavelengths` — массив длин волн, соответствующих каналам `Rrs`.
-* **Выход:**
+  * `rrs` — water reflectance at different wavelengths (`Rrs` array).
+  * `wavelengths` — array of wavelengths corresponding to `Rrs` channels.
+* **Output:**
 
-  * `chl` — массив концентрации хлорофилла (mg/m³).
-* **Метод:**
+  * `chl` — array of chlorophyll concentration (mg/m³).
+* **Method:**
 
-  * Вычисляет переменную `R` через соотношение отражений на 443, 490, 510 и 555 нм.
-  * Применяет полиномиальный алгоритм OC4V6 для расчета концентрации хлорофилла.
-
----
-
-### 3.3 Функция `get_pace_oc4(short_name, temporal, bbox, max_granules=5)`
-
-* **Назначение:** загрузка данных PACE L2 за период и регион, расчет хлорофилла.
-* **Параметры:**
-
-  * `short_name` — идентификатор датасета (например, `"PACE_OCI_L2_AOP_NRT"`).
-  * `temporal` — кортеж дат (`start_date`, `end_date`), например `("2025-09-08", "2025-09-14")`.
-  * `bbox` — прямоугольник координат (`lon_min, lat_min, lon_max, lat_max`).
-  * `max_granules` — максимальное число файлов для скачивания.
-* **Выход:** кортеж `(lat, lon, chl)`:
-
-  * `lat` — широта каждой точки.
-  * `lon` — долгота каждой точки.
-  * `chl` — значение концентрации хлорофилла для каждой точки.
-* **Особенности:**
-
-  * Конкатенирует все гранулы.
-  * Пропускает NaN значения.
-  * Выводит статистику (`mean`, `min`, `max`) для каждой гранулы.
+  * Calculates variable `R` through reflectance ratios at 443, 490, 510 and 555 nm.
+  * Applies polynomial OC4V6 algorithm for chlorophyll concentration calculation.
 
 ---
 
-### 3.4 Параметры анализа
+### 3.3 Function `get_pace_oc4(short_name, temporal, bbox, max_granules=5)`
+
+* **Purpose:** loading PACE L2 data for period and region, chlorophyll calculation.
+* **Parameters:**
+
+  * `short_name` — dataset identifier (e.g., `"PACE_OCI_L2_AOP_NRT"`).
+  * `temporal` — date tuple (`start_date`, `end_date`), e.g. `("2025-09-08", "2025-09-14")`.
+  * `bbox` — coordinate rectangle (`lon_min, lat_min, lon_max, lat_max`).
+  * `max_granules` — maximum number of files to download.
+* **Output:** tuple `(lat, lon, chl)`:
+
+  * `lat` — latitude of each point.
+  * `lon` — longitude of each point.
+  * `chl` — chlorophyll concentration value for each point.
+* **Features:**
+
+  * Concatenates all granules.
+  * Skips NaN values.
+  * Outputs statistics (`mean`, `min`, `max`) for each granule.
+
+---
+
+### 3.4 Analysis Parameters
 
 ```python
 temporal = ("2025-09-08", "2025-09-14")
-bbox = (-160, -10, -120, 10)  # Экваториальная зона Тихого океана (El Niño)
+bbox = (-160, -10, -120, 10)  # Equatorial Pacific zone (El Niño)
 max_granules = 5
 ```
 
-* Задает временной интервал и регион интереса.
-* Ограничение на количество гранул предотвращает скачивание слишком большого объема данных.
+* Sets time interval and region of interest.
+* Granule count limitation prevents downloading too much data.
 
 ---
 
-### 3.5 Визуализация
+### 3.5 Visualization
 
 ```python
 plt.figure(figsize=(12,6))
@@ -103,36 +103,36 @@ plt.title("PACE Chlorophyll-a (OC4 proxy, Pacific)")
 plt.show()
 ```
 
-* Строит **точечную карту** хлорофилла по координатам.
-* Цвет точек соответствует концентрации хлорофилла (mg/m³).
-* Добавлены:
+* Builds **scatter map** of chlorophyll by coordinates.
+* Point colors correspond to chlorophyll concentration (mg/m³).
+* Added:
 
-  * Берега (`ax.coastlines()`)
-  * Суша (`cfeature.LAND`) светло-серым цветом.
-* Настройки цвета: от 0 до 5 mg/m³ (`vmin=0, vmax=5`).
+  * Coastlines (`ax.coastlines()`)
+  * Land (`cfeature.LAND`) in light gray.
+* Color settings: from 0 to 5 mg/m³ (`vmin=0, vmax=5`).
 
 ---
 
-## 4. Результаты графиков
+## 4. Plot Results
 
 1. **Scatter Map (PACE Chlorophyll-a)**
 
-   * Отображает распределение концентрации хлорофилла на выбранной территории.
-   * Цветовая шкала: `viridis` (темно-синий — низкая концентрация, желто-зеленый — высокая).
-   * Используется для анализа биологической активности океана и обнаружения зон роста фитопланктона.
+   * Displays chlorophyll concentration distribution on selected area.
+   * Color scale: `viridis` (dark blue — low concentration, yellow-green — high).
+   * Used for ocean biological activity analysis and phytoplankton growth zone detection.
 
-2. **Возможные улучшения визуализации:**
+2. **Possible visualization improvements:**
 
-   * Усреднение по дню или неделе.
-   * Интерполяция точек на сетку для получения непрерывной карты.
-   * Добавление побережья стран или других географических слоёв (`cfeature.BORDERS`).
+   * Daily or weekly averaging.
+   * Point interpolation to grid for continuous map.
+   * Adding country coastlines or other geographic layers (`cfeature.BORDERS`).
 
 ---
 
-## 5. Ограничения
+## 5. Limitations
 
-* Данные PACE L2 — это отдельные орбитальные гранулы. Код **не усредняет** данные по времени или пространству.
-* Для недельного усреднения или построения регулярной сетки нужно добавить агрегацию.
-* Максимальное число гранул (`max_granules`) ограничивает полноту покрытия.
+* PACE L2 data are individual orbital granules. Code **does not average** data by time or space.
+* For weekly averaging or regular grid construction, aggregation needs to be added.
+* Maximum granule count (`max_granules`) limits coverage completeness.
 
 

@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Ocean Insights | NASA Shark Habitat Intelligence",
+  title: "Shark Feeding Hotspot Prediction | NASA Space Apps 2025",
   description:
-    "Interactive dashboard fusing NASA satellite products with predictive shark ecology analytics and conceptual tagging innovation.",
+    "Mathematical framework for identifying shark feeding hotspots using NASA satellite data. Advanced predictive modeling of oceanographic-ecological relationships.",
 };
 
 export default function RootLayout({ children }) {

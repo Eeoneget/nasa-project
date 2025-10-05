@@ -61,7 +61,7 @@ export default function PlotsGallery() {
       } catch (err) {
         console.error("Failed to load plots manifest", err);
         if (isMounted) {
-          setError("Не удалось загрузить список визуализаций.");
+          setError("Failed to load visualizations list.");
           setLoading(false);
         }
       }
@@ -91,7 +91,7 @@ export default function PlotsGallery() {
         setDocContent((prev) => ({ ...prev, [path]: text }));
       } catch (err) {
         console.error("Failed to load doc", err);
-        setDocError("Не удалось загрузить документ.");
+        setDocError("Failed to load document.");
       } finally {
         setDocLoadingPath(null);
       }
@@ -106,7 +106,7 @@ export default function PlotsGallery() {
   if (loading) {
     return (
       <section className="rounded-3xl border border-white/10 bg-black/40 p-6 text-white">
-        <p className="text-sm text-white/70">Загружаем визуализации…</p>
+        <p className="text-sm text-white/70">Loading visualizations...</p>
       </section>
     );
   }
@@ -114,7 +114,7 @@ export default function PlotsGallery() {
   if (error) {
     return (
       <section className="rounded-3xl border border-rose-500/30 bg-rose-500/10 p-6 text-white">
-        <h2 className="text-lg font-semibold">PACE plots недоступны</h2>
+        <h2 className="text-lg font-semibold">PACE plots unavailable</h2>
         <p className="text-sm text-white/70">{error}</p>
       </section>
     );
@@ -126,8 +126,8 @@ export default function PlotsGallery() {
         <p className="text-xs uppercase tracking-[0.35em] text-teal-300">PACE Python Outputs</p>
         <h2 className="text-2xl font-semibold">Plots & Docs Archive</h2>
         <p className="text-sm text-white/70 max-w-3xl">
-          Просматривайте PNG-рендеры и методические заметки из ноутбуков в папке <code className="rounded bg-white/10 px-1">plots</code>.
-          Для ключевых сцен доступен интерактивный режим Plotly прямо в браузере.
+          Browse PNG renders and methodological notes from notebooks in the <code className="rounded bg-white/10 px-1">plots</code> folder.
+          Interactive Plotly mode is available directly in the browser for key scenes.
         </p>
       </header>
 
@@ -137,7 +137,7 @@ export default function PlotsGallery() {
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <h3 className="text-xl font-semibold capitalize">{category.name}</h3>
               <span className="text-xs text-white/50">
-                {category.files.length} файл{category.files.length === 1 ? "" : "ов"}
+                {category.files.length} file{category.files.length === 1 ? "" : "s"}
               </span>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -159,7 +159,7 @@ export default function PlotsGallery() {
                         download={file.name}
                         className="rounded-xl border border-teal-300/50 px-3 py-1 text-xs text-teal-200 transition hover:bg-teal-400/10"
                       >
-                        Скачать
+                        Download
                       </a>
                     </header>
 
@@ -177,14 +177,14 @@ export default function PlotsGallery() {
                     {file.type === "doc" ? (
                       <div className="space-y-2">
                         <p className="text-xs leading-relaxed text-white/65 whitespace-pre-line">
-                          {file.excerpt || "Документ готов к просмотру."}
+                          {file.excerpt || "Document ready for viewing."}
                         </p>
                         <button
                           type="button"
                           onClick={() => handleViewDoc(file.path)}
                           className="rounded-xl border border-white/20 bg-white/5 px-3 py-1 text-xs text-white/80 transition hover:bg-white/10"
                         >
-                          {docLoadingPath === file.path ? "Открываем…" : "Открыть полностью"}
+                          {docLoadingPath === file.path ? "Opening..." : "Open full"}
                         </button>
                         {docError && selectedDoc === file.path && !docContent[file.path] ? (
                           <p className="text-xs text-rose-300">{docError}</p>
@@ -194,7 +194,7 @@ export default function PlotsGallery() {
 
                     {file.type === "script" ? (
                       <p className="text-xs text-white/60">
-                        Исходник генерации. Используйте ссылку скачивания, чтобы просмотреть Python-скрипт.
+                        Generation source. Use the download link to view the Python script.
                       </p>
                     ) : null}
 
@@ -204,7 +204,7 @@ export default function PlotsGallery() {
                         onClick={() => toggleInteractive(file.path)}
                         className="rounded-xl border border-teal-300/40 bg-teal-400/10 px-3 py-1 text-xs text-teal-100 transition hover:bg-teal-400/20"
                       >
-                        {isInteractiveOpen ? "Скрыть интерактив" : "Показать интерактив"}
+                        {isInteractiveOpen ? "Hide interactive" : "Show interactive"}
                       </button>
                     ) : null}
 
@@ -245,7 +245,7 @@ export default function PlotsGallery() {
                     ) : null}
 
                     <footer className="mt-auto text-[11px] text-white/45">
-                      Обновлено {formatDate(file.modified)}
+                      Updated {formatDate(file.modified)}
                     </footer>
                   </article>
                 );
@@ -264,14 +264,14 @@ export default function PlotsGallery() {
               onClick={() => setSelectedDoc(null)}
               className="rounded-xl border border-white/20 bg-white/5 px-3 py-1 text-xs text-white/70 transition hover:bg-white/10"
             >
-              Закрыть
+              Close
             </button>
           </div>
           {docLoadingPath === selectedDoc && !docContent[selectedDoc] ? (
-            <p className="mt-3 text-sm text-white/60">Загружаем документ…</p>
+            <p className="mt-3 text-sm text-white/60">Loading document...</p>
           ) : (
             <pre className="mt-3 max-h-96 overflow-y-auto whitespace-pre-wrap rounded-xl bg-black/80 p-3 text-xs leading-relaxed text-white/80">
-              {docContent[selectedDoc] ?? "Документ не загружен."}
+              {docContent[selectedDoc] ?? "Document not loaded."}
             </pre>
           )}
           {docError && !docContent[selectedDoc] ? (

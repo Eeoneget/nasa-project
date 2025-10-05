@@ -39,12 +39,12 @@ export default function LayerControls({
 
   return (
     <div className="rounded-3xl bg-white/10 backdrop-blur-md border border-white/10 p-6 text-white shadow-lg">
-      <h3 className="text-lg font-semibold mb-4">Interactive Layers</h3>
+      <h3 className="text-lg font-semibold mb-4">Oceanographic Data Layers</h3>
       <div className="space-y-3">
         {[
-          { key: "seaSurfaceTemperature", label: "Sea Surface Temperature" },
-          { key: "phytoplankton", label: "Phytoplankton" },
-          { key: "sharkHotspots", label: "Shark Feeding Hotspots" }
+          { key: "seaSurfaceTemperature", label: "Sea Surface Temperature (SST)" },
+          { key: "phytoplankton", label: "Chlorophyll-a Concentration" },
+          { key: "sharkHotspots", label: "Predicted Feeding Hotspots" }
         ].map((layer) => (
           <label
             key={layer.key}

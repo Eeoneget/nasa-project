@@ -113,8 +113,8 @@ export default function SharkModelSection() {
   return (
     <section className="rounded-3xl border border-white/10 bg-white/5 p-8 text-white shadow-xl space-y-8">
       <header className="space-y-2">
-        <p className="text-xs uppercase tracking-[0.4em] text-teal-300">Synthetic Shark Activity Model</p>
-        <h2 className="text-2xl md:text-3xl font-semibold">Global Shark Foraging Intelligence</h2>
+        <p className="text-xs uppercase tracking-[0.4em] text-teal-300">Hackathon Shark Activity Model</p>
+        <h2 className="text-2xl md:text-3xl font-semibold">Global Shark Foraging Storyboard</h2>
         <p className="text-sm text-white/70 leading-relaxed max-w-3xl">
           Outputs from the SharkActivityModel simulate how thermal structure, chlorophyll, and sea-level anomalies translate into
           foraging likelihoods. Data are stochastic but reproducible for demo purposes and can be regenerated via
@@ -140,11 +140,11 @@ export default function SharkModelSection() {
 
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
         <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
-          <h3 className="text-sm font-semibold text-teal-200 mb-2">Activity time series (bi-weekly)</h3>
+          <h3 className="text-sm font-semibold text-teal-200 mb-2">Activity time series (bi-weekly demo feed)</h3>
           <TimeSeriesPlot timeSeries={timeSeries} selectedRegions={topRegions} />
         </div>
         <div className="rounded-2xl border border-white/10 bg-black/40 p-4 space-y-3">
-          <h3 className="text-sm font-semibold text-teal-200">Region summary</h3>
+          <h3 className="text-sm font-semibold text-teal-200">Region quick stats</h3>
           <ul className="text-xs text-white/65 space-y-2 max-h-[320px] overflow-y-auto pr-1">
             {regions.map((region) => (
               <li key={region.region} className="rounded-xl border border-white/10 bg-black/50 p-3">
@@ -163,11 +163,11 @@ export default function SharkModelSection() {
 
       <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
         <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
-          <h3 className="text-sm font-semibold text-teal-200 mb-2">SST vs shark activity</h3>
+          <h3 className="text-sm font-semibold text-teal-200 mb-2">SST vs shark activity (talking points)</h3>
           <ScatterPlot scatter={scatter} />
         </div>
         <div className="rounded-2xl border border-white/10 bg-black/40 p-4 space-y-2">
-          <h3 className="text-sm font-semibold text-teal-200">Top activity hotspots</h3>
+          <h3 className="text-sm font-semibold text-teal-200">Top activity hotspots to pitch</h3>
           <p className="text-xs text-white/65">
             Highest 80th percentile cells based on simulated Shark Activity Index (SAI).
           </p>

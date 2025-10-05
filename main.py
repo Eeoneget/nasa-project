@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 class SharkActivityModel:
     def __init__(self):
-        # Базовые регионы + пользовательские
+        # Base regions + custom
         self.regions = {
             'gulf_stream': (35.0, -75.0),
             'california_current': (32.0, -118.0),

@@ -45,7 +45,7 @@ export default function PaceAnalysisSection() {
         <div className="rounded-2xl border border-white/10 bg-black/40 p-5 space-y-3">
           <h3 className="text-lg font-semibold text-teal-200">Top delta NFLH cells</h3>
           <p className="text-xs text-white/65 leading-relaxed">
-            Normalized rankings for the largest NFLH increases (indices correspond to the downsampled grid used for interactive rendering).
+            Highest-ranked bloom surges based on ?NFLH ? perfect talking points when explaining sampling priorities.
           </p>
           <ol className="space-y-2 text-sm">
             {hotspots?.map((spot) => (
