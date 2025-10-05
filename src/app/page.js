@@ -6,6 +6,9 @@ import LayerControls from "../components/LayerControls";
 import AnalyticsDashboard from "../components/AnalyticsDashboard";
 import ConceptualModelCard from "../components/ConceptualModelCard";
 import ScenarioInsights from "../components/ScenarioInsights";
+import PaceAnalysisSection from "../components/PaceAnalysisSection";
+import SharkModelSection from "../components/SharkModelSection";
+import PlotsGallery from "../components/PlotsGallery";
 import {
   oceanLayers,
   analyticsSeries,
@@ -312,6 +315,11 @@ export default function Home() {
           </div>
           <ConceptualModelCard model={conceptualModel} />
         </section>
+
+        <PaceAnalysisSection />
+
+        <SharkModelSection />
+        <PlotsGallery />
       </main>
     </div>
   );
