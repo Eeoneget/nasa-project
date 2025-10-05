@@ -180,7 +180,7 @@ export default function ScatterInsights({ data }) {
             tickLine={false}
             domain={[axisStats.y.min - 0.2, axisStats.y.max + 0.2]}
           />
-          <ZAxis dataKey={currentView.colorKey} range={[0, 1]} name={currentView.colorLabel} />
+          <ZAxis dataKey={currentView.colorKey} range={[0, 50]} name={currentView.colorLabel} />
           <Tooltip cursor={{ strokeDasharray: "3 3" }} content={<ScatterTooltip />} />
           <Scatter data={displayData}>
             {displayData.map((point) => (
@@ -189,7 +189,7 @@ export default function ScatterInsights({ data }) {
                 fill={point.tagged ? "#facc15" : colorScale(point[currentView.colorKey])}
                 stroke={point.tagged ? "#f59e0b" : "transparent"}
                 strokeWidth={point.tagged ? 1.5 : 0}
-                r={point.tagged ? 6 : 4}
+                r={point.tagged ? 60 : 40}
               />
             ))}
           </Scatter>
